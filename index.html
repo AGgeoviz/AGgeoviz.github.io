@@ -1,4 +1,9 @@
 
+<!-- Invalid JSON file: Error: Invalid LngLat latitude value: must be between -90 and 90 -->
+
+
+<!-- It often takes several minutes for the GitHub changes to take effect in AGgeoviz.github.io.  In order to see whether the 
+changes have gone into effect or not, we can right-click in the body of the AGgeoviz.github.io site and select "inspect" -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,8 +31,8 @@
             maxZoom: 18,
         }).addTo(map);
 
-        // Replace 'data.geojson' with the path to your local GeoJSON file
-        fetch('C:/Users/Owner/Desktop/AGgeovizGitHub/AGgeoviz.github.io/YpsiParcelsGeoJSON.geojson')
+        // Replace 'data.geojson' with the path to your local GeoJSON file... simplest if geojson file put in same directory as html
+        fetch('C:/Users/Owner/Desktop/geojson_rewound_test.geojson')
             .then(function(response) {
                 return response.json();
             })
