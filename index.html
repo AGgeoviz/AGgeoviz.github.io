@@ -1,16 +1,9 @@
-
-<!-- Invalid JSON file: Error: Invalid LngLat latitude value: must be between -90 and 90 -->
-
-
-<!-- It often takes several minutes for the GitHub changes to take effect in AGgeoviz.github.io.  In order to see whether the 
-changes have gone into effect or not, we can right-click in the body of the AGgeoviz.github.io site and select "inspect" -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display GeoJSON with Leaflet</title>
+    <title>Leaflet GeoJSON Example</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <!-- Leaflet JavaScript -->
@@ -25,18 +18,21 @@ changes have gone into effect or not, we can right-click in the body of the AGge
     <div id="map"></div>
 
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13); // Set initial map view coordinates and zoom level
+        // Initialize the map
+        var map = L.map('map').setView([51.505, -0.09], 13);
 
+        // Add OpenStreetMap tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Replace 'data.geojson' with the path to your local GeoJSON file... simplest if geojson file put in same directory as html
-        fetch('C:/Users/Owner/Desktop/AGgeovizGitHub/AGgeoviz.github.io/geojson_rewound_test.geojson')
+        // Load GeoJSON file
+        fetch('geojson_rewound_test.geojson')
             .then(function(response) {
                 return response.json();
             })
             .then(function(data) {
+                // Add GeoJSON layer to the map
                 L.geoJSON(data).addTo(map);
             });
     </script>
