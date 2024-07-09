@@ -1,40 +1,33 @@
-<!-- Can host data for leaflet or maplibre gl visualization on google drive but must modify url as shown below -->
-<!-- https://drive.google.com/file/d/your-file-id/view?usp=sharing -->
-<!-- https://drive.google.com/uc?id=your-file-id -->
-
-<!-- https://drive.google.com/file/d/1YT8urWtTrZGxS1hSubaWWYKq5BHKLicm/view?usp=drive_link -->
-
-
-<!-- https://drive.google.com/uc?id=1YT8urWtTrZGxS1hSubaWWYKq5BHKLicm -->
-
-
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Leaflet GeoJSON Example</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display GeoJSON with Leaflet</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <style>
-        #map { height: 600px; }
+        #map {
+            height: 600px;
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
 
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
+        var map = L.map('map').setView([51.505, -0.09], 13); // Set initial map view coordinates and zoom level
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            maxZoom: 18,
         }).addTo(map);
 
-        // Replace with your Google Drive hosted GeoJSON URL
-//        var geojsonUrl = 'https://drive.google.com/uc?id=1YT8urWtTrZGxS1hSubaWWYKq5BHKLicm';
-	var geojsonUrl = 'https://drive.google.com/file/d/1YT8urWtTrZGxS1hSubaWWYKq5BHKLicm/view?usp=drive_link
-
-        fetch(geojsonUrl)
+        // Replace 'data.geojson' with the path to your local GeoJSON file
+        fetch('C:/Users/Owner/DesktopYpsiParcelsGeoJSON.geojson')
             .then(function(response) {
                 return response.json();
             })
