@@ -31,7 +31,7 @@ body { margin: 0; padding: 0; }
 			
 	map.on('load', () => {
 		// Add the vector source
-		map.addSource('mapbox-terrain', {
+		map.addSource('random', {
 			'type': 'vector',
 			'url': 'mapbox://adaptgeo.5ydrbbzb' // Replace with your actual vector tileset ID
 		});
@@ -40,7 +40,7 @@ body { margin: 0; padding: 0; }
 		map.addLayer({
 			'id': 'fill-layer',
 			'type': 'fill',
-			'source': 'mapbox-terrain', // This should match the source ID added above
+			'source': 'random', // This should match the source ID added above
 			'source-layer': 'BufferedSinks_0808130444-3lyl9q', // Specify the source layer within the vector tileset
 			'paint': {
 				'fill-color': '#888888',
