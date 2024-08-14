@@ -1,3 +1,40 @@
+<!-- 
+IMPORTANT:  Bear in mind that our mapbox username is "adaptgeo" whereas our github username is "aggeoviz"
+
+This index.html file is used to link to other .html files, each of which corresponds to one GI toolkit output
+
+To create a new tileset .html, select "Add File" then "Create New File" then Enter Code and Save as .html
+	Webpage URL:  https://aggeoviz.github.io/(filename).html
+
+I'm sure there's a way to automate tileset name extraction, but for the meantime, a convenient way to grab the tilest name 
+is to right-click on its name in mapbox studio and select "Search google for..." then copy from the address bar and paste into html
+
+Since there is lag in posting html to github, a faster way to proof-read code is to run a local web server and open the HTML 
+file in my browser. For example, using Python's built-in HTTP server:
+
+    In the command shell:
+
+		Navigate to the directory containing HTML file and execute the following command:
+		
+			python -m http.server
+
+        Then open web browser and navigate to http://localhost:8000/yourfile.html.
+
+
+COLOR SCHEME
+
+Buildings: #a8a396 (variable opacity)
+Parcels: #facc71 (sometimes full parcel, sometimes just boundary)
+HighPD Main Channels: #5ccae8 (100% opacity)
+HighPD Sub-basins: #5ccae8 (slightly transparent)
+Other Channels: #5167b0 (slightly transparent)
+VegNonCanopy: #ffff00  (100% opacity)
+TreeCanopy: #008000(moderately transparent)
+HeatIslands: RASTER, Vivid Green to Red Scale (moderately transparent)
+-->
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +46,7 @@
     <nav>
         <ul>
             <li><a href="https://aggeoviz.github.io/YpsiParcelsTest.html">YpsiParcels</a></li>
-            <li><a href="https://aggeoviz.github.io/AOIbasin.html">AOIbasin</a></li>
+			<li><a href="https://aggeoviz.github.io/AOIbasin.html">AOIbasin</a></li>
         </ul>
     </nav>
 </body>
