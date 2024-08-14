@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Multiple Vector Layers with Toggle Controls</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 80%; height: 100%; }
+        #layer-controls { position: absolute; top: 10px; left: 85%; background: white; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="layer-controls">
+        <h3>Layer Controls</h3>
+        <label><input type="checkbox" id="tileset1" checked> Tileset 1</label><br>
+        <label><input type="checkbox" id="tileset2" checked> Tileset 2</label><br>
+        <label><input type="checkbox" id="tileset3" checked> Tileset 3</label><br>
+        <label><input type="checkbox" id="tileset4" checked> Tileset 4</label><br>
+        <label><input type="checkbox" id="tileset5" checked> Tileset 5</label><br>
+        <label><input type="checkbox" id="tileset6" checked> Tileset 6</label><br>
+        <label><input type="checkbox" id="tileset7" checked> Tileset 7</label><br>
+        <label><input type="checkbox" id="tileset8" checked> Tileset 8</label><br>
+    </div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhcHRnZW8iLCJhIjoiY2xwdmIwMGlyMDNkZzJrcGsybXh1emFpMSJ9.qeCqoOvHTXJIKF4q80v4CA'; // Replace with your access token
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v11',
+            center: [-83.618813, 42.239132],
+            zoom: 15
+        });
+
+        // Array of tileset configurations
+        const tilesets = [
+            { id: 'tileset1', url: 'mapbox://adaptgeo.66wrvweg', layerName: 'tileset1-layer', color: '#ff0000' },
+            { id: 'tileset2', url: 'mapbox://adaptgeo.5ydrbbzb', layerName: 'tileset2-layer', color: '#00ff00' },
+            { id: 'tileset3', url: 'mapbox://adaptgeo.1jpymrhu', layerName: 'tileset3-layer', color: '#0000ff' },
+            { id: 'tileset4', url: 'mapbox://adaptgeo.4grft62c', layerName: 'tileset4-layer', color: '#ffff00' },
+            { id: 'tileset5', url: 'mapbox://adaptgeo.bo4zqci4', layerName: 'tileset5-layer', color: '#ff00ff' },
+            { id: 'tileset6', url: 'mapbox://adaptgeo.cphpu1rj', layerName: 'tileset6-layer', color: '#00ffff' },
+            { id: 'tileset7', url: 'mapbox://adaptgeo.cpf99l33', layerName: 'tileset7-layer', color: '#ff6600' },
+            { id: 'tileset8', url: 'mapbox://adaptgeo.1946hgu2', layerName: 'tileset8-layer', color: '#6600ff' }
+        ];
+
+        map.on('load', () => {
+            tilesets.forEach(tileset => {
+                // Add source for each tileset
+                map.addSource(tileset.id, {
+                    type: 'vector',
+                    url: tileset.url
+                });
+
+                // Add layer for each tileset
+                map.addLayer({
+                    id: tileset.id,
+                    type: 'fill',
+                    source: tileset.id,
+                    'source-layer': tileset.layerName, // Use the specified layer name
+                    paint: {
+                        'fill-color': tileset.color,
+                        'fill-opacity': 0.6
+                    }
+                });
+
+                // Set initial visibility
+                map.setLayoutProperty(tileset.id, 'visibility', 'visible');
+            });
+
+            // Add event listeners for layer controls
+            document.querySelectorAll('#layer-controls input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    const layerId = event.target.id;
+                    if (event.target.checked) {
+                        map.setLayoutProperty(layerId, 'visibility', 'visible');
+                    } else {
+                        map.setLayoutProperty(layerId, 'visibility', 'none');
+                    }
+                });
+            });
+        });
+
+        map.on('error', (e) => {
+            console.error('Map error:', e.error);
+        });
+    </script>
+</body>
+</html>
