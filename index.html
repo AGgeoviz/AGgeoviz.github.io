@@ -1,57 +1,16 @@
-
-<!-- "Add File" then "Create New File" then Enter Code and Save as .html -->
-<!-- Webpage URL:  https://aggeoviz.github.io/(filename).html -->
-
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Add a vector tile source</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-<link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
-<style>
-body { margin: 0; padding: 0; }
-#map { position: absolute; top: 0; bottom: 0; width: 100%; }
-</style>
+    <meta charset="utf-8">
+    <title>My GitHub Pages Site</title>
 </head>
 <body>
-<div id="map"></div>
-<script>
-	mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhcHRnZW8iLCJhIjoiY2xwdmIwMGlyMDNkZzJrcGsybXh1emFpMSJ9.qeCqoOvHTXJIKF4q80v4CA';
-    const map = new mapboxgl.Map({
-        container: 'map',
-        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-        style: 'mapbox://styles/mapbox/light-v11',
-        zoom: 15,
-        //center: [-122.447303, 37.753574]
-	center: [-83.618813, 42.239132]
-    });
-			
-	map.on('load', () => {
-		// Add the vector source
-		map.addSource('random', {
-			'type': 'vector',
-			'url': 'mapbox://adaptgeo.5ydrbbzb' // Replace with your actual vector tileset ID
-		});
-
-		// Add a layer from the vector source
-		map.addLayer({
-			'id': 'fill-layer',
-			'type': 'fill',
-			'source': 'random', // This should match the source ID added above
-			'source-layer': 'BufferedSinks_0808130444-3lyl9q', // Specify the source layer within the vector tileset
-			'paint': {
-				'fill-color': '#888888',
-				'fill-opacity': 0.4,
-				'fill-outline-color': '#000000'
-			}
-		});
-	});
-			
-			
-</script>
-
+    <h1>Welcome to My GitHub Pages Site</h1>
+    <nav>
+        <ul>
+            <li><a href="YpsiParcelsTest.html">About</a></li>
+<!--            <li><a href="contact.html">Contact</a></li>    -->
+        </ul>
+    </nav>
 </body>
 </html>
