@@ -1,0 +1,68 @@
+<!-- http://bboxfinder.com useful for finding lat/lon bounding box -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Add a raster image to a map layer</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoidHJ5b3V0bWFwYm94MzQiLCJhIjoiY2x6eThwYjloMGIzbjJqcHQ2MWJjZHgycCJ9.-qX2exm_bFHUiXMzgz4AWA';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        maxZoom: 18,
+        minZoom: 14,
+        zoom: 16,
+        center: [-83.620237,42.240202],
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: 'mapbox://styles/mapbox/satellite-streets-v12'
+    });
+
+    map.on('load', () => {
+        map.addSource('any_source_name', {
+            'type': 'image',
+            'url': 'mapbox://tryoutmapbox34.bjl3p4si',
+            'coordinates': [
+                [-83.624711,42.243070],
+                [-83.615785,42.243070],
+                [-83.615785,42.237351],
+                [-83.624711,42.237351],
+
+            ]
+        });
+        map.addLayer({
+            id: 'any_layer_name',
+            'type': 'raster',
+            'source': 'any_source_name',
+            paint: {
+			  'raster-color-range': [23, 42],
+			  'raster-array-band': '1',
+			  'raster-color': [
+				'interpolate',
+				['linear'],
+				['raster-value'],
+				23,
+				'#50509B',
+				32,
+				'#FAFAA0',
+				42,
+				'#96053C'
+			  ],
+			  'raster-resampling': 'linear'
+        }
+        });
+    });
+</script>
+
+</body>
+</html>
