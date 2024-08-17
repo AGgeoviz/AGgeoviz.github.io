@@ -1,0 +1,46 @@
+{
+  "version": 8,
+  "name": "Raster Gradient Style",
+  "sources": {
+    "raster-tiles": {
+      "type": "raster",
+      "tiles": [
+        "https://tryoutmapbox34.bjl3p4si"
+      ],
+      "tileSize": 256
+    }
+  },
+  "layers": [
+    {
+      "id": "raster-layer",
+      "type": "raster",
+      "source": "raster-tiles",
+      "paint": {
+        "raster-color": [
+          "step",
+          ["get", "raster-value"],  // Assuming raster tiles contain a property called 'raster-value'
+          "#00FF00", // Green for the lowest values
+          10, "#FFFF00", // Yellow for values above 10
+          20, "#FFA500", // Orange for values above 20
+          30, "#FF0000"  // Red for values above 30
+        ],
+        "raster-color-mix": [
+          "step",
+          ["get", "raster-value"],
+          0, "#00FF00", // Gradient starts with green
+          0.25, "#FFFF00", // Gradually transitioning to yellow
+          0.5, "#FFA500", // Gradually transitioning to orange
+          0.75, "#FF0000"  // Gradually transitioning to red
+        ],
+        "raster-color-range": [
+          "step",
+          ["get", "raster-value"],
+          "#00FF00", // Green for the lowest values
+          10, "#FFFF00", // Yellow for values above 10
+          20, "#FFA500", // Orange for values above 20
+          30, "#FF0000"  // Red for values above 30
+        ]
+      }
+    }
+  ]
+}
