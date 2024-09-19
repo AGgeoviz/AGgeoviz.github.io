@@ -142,6 +142,7 @@ body { margin: 0; padding: 0; }
 
 		// Fifth vector tileset source and layer (parcel boundary lines) were removed, and it is not a good use of time to 
 		// re-number all the subsequent code
+		
         // Add sixth vector tileset source and layer
         map.addSource('vector6-tileset-source', {
             'type': 'vector',
@@ -193,13 +194,13 @@ body { margin: 0; padding: 0; }
 		// Add ninth vector tileset source and layer
 		map.addSource('vector9-tileset-source', {
 			type: 'vector',
-			url: 'mapbox://adaptgeo.dxuzr9ac'
+			url: 'mapbox://adaptgeo.YpsiParcelsAddressAPN'
 		});
 		map.addLayer({
 			'id': 'vector9-tileset-layer',
 			'type': 'fill', // Change this to 'line' or 'symbol' as needed
 			'source': 'vector9-tileset-source',
-			'source-layer': 'MoreParcelsDowntownYpsi_WGS84',
+			'source-layer': 'YpsiParcelsAddressAPN',
 			'paint': {
 				'fill-color': '#facc71',
 				'fill-outline-color': '#000000', // This sets the border color
@@ -283,7 +284,7 @@ body { margin: 0; padding: 0; }
 
 				// Set the popup content to the 'description' property of the feature
 				//popup.setHTML(feature.properties.description);
-				popup.setHTML('<h3>' + feature.properties.Shape_Area + '</h3><p>' + feature.properties.Shape_Leng + '</p>');
+				popup.setHTML('<h3>' + feature.properties.address + '</h3><p>' + feature.properties.apn + '</p>');
 
 
 				// Add the popup to the map
