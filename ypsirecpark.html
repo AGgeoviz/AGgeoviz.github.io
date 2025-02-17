@@ -72,6 +72,14 @@ body { margin: 0; padding: 0; }
         Sinks: <br>
         <input type="range" id="vector4-opacity" min="0" max="100" value="100">
     </div>
+    <div class="menu-item">
+        Building Footprints: <br>
+        <input type="range" id="vector5-opacity" min="0" max="100" value="100">
+    </div>
+	<div class="menu-item">
+        Parcels: <br>
+        <input type="range" id="vector6-opacity" min="0" max="100" value="100">
+    </div>
 </div>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhcHRnZW8iLCJhIjoiY2xwdmIwMGlyMDNkZzJrcGsybXh1emFpMSJ9.qeCqoOvHTXJIKF4q80v4CA';
@@ -161,6 +169,39 @@ body { margin: 0; padding: 0; }
             }
 		});
 
+        // Add fifth vector tileset source and layer
+        map.addSource('vector5-tileset-source', {
+            'type': 'vector',
+            'url': 'mapbox://adaptgeo.2k9ulz2f' // Replace with actual vector tileset URL
+        });
+        map.addLayer({
+            'id': 'vector5-tileset-layer',
+            'type': 'fill',
+            'source': 'vector5-tileset-source',
+            'source-layer': 'RecParkContigBuildingFootprin-8mhtyc', // Replace with actual source layer name
+            'paint': {
+                'fill-color': '#a8a396',
+                'fill-opacity': 1
+            }
+        });
+
+		// Add sixth vector tileset source and layer
+		map.addSource('vector6-tileset-source', {
+			type: 'vector',
+			url: 'mapbox://adaptgeo.78dydxev'
+		});
+		map.addLayer({
+			'id': 'vector6-tileset-layer',
+			'type': 'fill', // Change this to 'line' or 'symbol' as needed
+			'source': 'vector6-tileset-source',
+			'source-layer': 'RecParkParcelsWithAddressCent-2kjubx',
+			'paint': {
+				'fill-color': '#facc71',
+				'fill-outline-color': '#000000', // This sets the border color
+				'fill-opacity': 0.6
+			}
+		});
+
         // Raster layer opacity control
         var rasterOpacity = document.getElementById('raster-opacity');
         rasterOpacity.addEventListener('input', function(e) {
@@ -189,6 +230,18 @@ body { margin: 0; padding: 0; }
         var vector4Opacity = document.getElementById('vector4-opacity');
         vector4Opacity.addEventListener('input', function(e) {
             map.setPaintProperty('vector4-tileset-layer', 'fill-opacity', parseInt(e.target.value, 10) / 100);
+        });
+
+        // Fifth vector layer opacity control
+        var vector5Opacity = document.getElementById('vector5-opacity');
+        vector5Opacity.addEventListener('input', function(e) {
+            map.setPaintProperty('vector5-tileset-layer', 'fill-opacity', parseInt(e.target.value, 10) / 100);
+        });
+
+        // Sixth vector layer opacity control
+        var vector6Opacity = document.getElementById('vector6-opacity');
+        vector6Opacity.addEventListener('input', function(e) {
+            map.setPaintProperty('vector6-tileset-layer', 'fill-opacity', parseInt(e.target.value, 10) / 100);
         });
 
         // Add toggle functionality for the menu
