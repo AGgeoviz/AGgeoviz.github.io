@@ -64,37 +64,37 @@ body { margin: 0; padding: 0; }
 	
 	<!-- Layer numbering may not match order because it's much easier just to move layers around without changing their numbers  -->
 	<div class="menu-item">
-    	Relative Land Surface Temperature: <br>
-    	<input type="range" id="raster-opacity" min="0" max="100" value="100">
+    	Parcels: <br>
+    	<input type="range" id="vector9-opacity" min="0" max="100" value="100">
 	</div>
+	<div class="menu-item">
+    	Building Footprints: <br>
+    	<input type="range" id="vector3-opacity" min="0" max="100" value="100">
+	</div>	
+    <div class="menu-item">
+    	Median Household Income: <br>
+    	<input type="range" id="vector10-opacity" min="0" max="100" value="100">
+	</div>	
+	<div class="menu-item">
+    	High Peak-Discharge Basin: <br>
+    	<input type="range" id="vector8-opacity" min="0" max="100" value="100">
+	</div>	
+	<div class="menu-item">
+    	Potential Check Dams: <br>
+    	<input type="range" id="vector4-opacity" min="0" max="100" value="100">
+	</div>	
+	<div class="menu-item">
+    	Tree Canopy: <br>
+    	<input type="range" id="vector2-opacity" min="0" max="100" value="100">
+	</div>	
 	<div class="menu-item">
     	Non-canopy Vegetation: <br>
     	<input type="range" id="vector1-opacity" min="0" max="100" value="100">
 	</div>
 	<div class="menu-item">
-    	Tree Canopy: <br>
-    	<input type="range" id="vector2-opacity" min="0" max="100" value="100">
-	</div>
-	<div class="menu-item">
-    	Potential Check Dams: <br>
-    	<input type="range" id="vector4-opacity" min="0" max="100" value="100">
-	</div>
-	<div class="menu-item">
-    	High Peak-Discharge Basin: <br>
-    	<input type="range" id="vector8-opacity" min="0" max="100" value="100">
-	</div>
-    <div class="menu-item">
-    	Median Household Income: <br>
-    	<input type="range" id="vector10-opacity" min="0" max="100" value="100">
-	</div>
-	<div class="menu-item">
-    	Building Footprints: <br>
-    	<input type="range" id="vector3-opacity" min="0" max="100" value="100">
-	</div>
-	<div class="menu-item">
-    	Parcels: <br>
-    	<input type="range" id="vector9-opacity" min="0" max="100" value="100">
-	</div>
+    	Relative Land Surface Temperature: <br>
+    	<input type="range" id="raster-opacity" min="0" max="100" value="100">
+	</div>	
 </div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhcHRnZW8iLCJhIjoiY2xwdmIwMGlyMDNkZzJrcGsybXh1emFpMSJ9.qeCqoOvHTXJIKF4q80v4CA';
