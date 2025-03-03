@@ -63,37 +63,38 @@ body { margin: 0; padding: 0; }
 	<button id="menuToggle">≡</button>
 	
 	<!-- Layer numbering may not match order because it's much easier just to move layers around without changing their numbers  -->
+	<!-- "value" below sets the initial position of the web map opacity slider -->
 	<div class="menu-item">
     	Potential Check Dams: <br>
     	<input type="range" id="vector4-opacity" min="0" max="100" value="100">
 	</div>
 	<div class="menu-item">
     	High Peak-Discharge Basin: <br>
-    	<input type="range" id="vector8-opacity" min="0" max="100" value="100">
+    	<input type="range" id="vector8-opacity" min="0" max="100" value="75">
 	</div>		
 	<div class="menu-item">
     	Non-canopy Vegetation: <br>
-    	<input type="range" id="vector1-opacity" min="0" max="100" value="100">
+    	<input type="range" id="vector1-opacity" min="0" max="100" value="75">
 	</div>
 	<div class="menu-item">
     	Tree Canopy: <br>
-    	<input type="range" id="vector2-opacity" min="0" max="100" value="100">
+    	<input type="range" id="vector2-opacity" min="0" max="100" value="75">
 	</div>	
 	<div class="menu-item">
     	Relative Land Surface Temperature: <br>
-    	<input type="range" id="raster-opacity" min="0" max="100" value="100">
+    	<input type="range" id="raster-opacity" min="0" max="100" value="75">
+	</div>
+	<div class="menu-item">
+    	Building Footprints: <br>
+    	<input type="range" id="vector3-opacity" min="0" max="100" value="100">
 	</div>
 	<div class="menu-item">
     	Parcels: <br>
     	<input type="range" id="vector9-opacity" min="0" max="100" value="100">
 	</div>
-	<div class="menu-item">
-    	Building Footprints: <br>
-    	<input type="range" id="vector3-opacity" min="0" max="100" value="100">
-	</div>	
     <div class="menu-item">
     	Median Household Income: <br>
-    	<input type="range" id="vector10-opacity" min="0" max="100" value="100">
+    	<input type="range" id="vector10-opacity" min="0" max="100" value="1">
 	</div>	
 </div>
 <script>
@@ -122,6 +123,23 @@ map.on('load', function() {
 		'paint': {
 			'fill-color': '#C4A484',
 			'fill-outline-color': '#000000', // This sets the border color
+			'fill-opacity': 0.01
+		}
+	});
+
+	// Add ninth vector tileset source and layer
+	map.addSource('vector9-tileset-source', {
+		type: 'vector',
+		url: 'mapbox://adaptgeo.YpsiParcelsAddressAPN'
+	});
+	map.addLayer({
+		'id': 'vector9-tileset-layer',
+		'type': 'fill', // Change this to 'line' or 'symbol' as needed
+		'source': 'vector9-tileset-source',
+		'source-layer': 'YpsiParcelsAddressAPN',
+		'paint': {
+			'fill-color': '#facc71',
+			'fill-outline-color': '#000000', // This sets the border color
 			'fill-opacity': 1
 		}
 	});
@@ -141,23 +159,6 @@ map.on('load', function() {
 			'fill-opacity': 1
 		}
 	});
-
-	// Add ninth vector tileset source and layer
-	map.addSource('vector9-tileset-source', {
-		type: 'vector',
-		url: 'mapbox://adaptgeo.YpsiParcelsAddressAPN'
-	});
-	map.addLayer({
-		'id': 'vector9-tileset-layer',
-		'type': 'fill', // Change this to 'line' or 'symbol' as needed
-		'source': 'vector9-tileset-source',
-		'source-layer': 'YpsiParcelsAddressAPN',
-		'paint': {
-			'fill-color': '#facc71',
-			'fill-outline-color': '#000000', // This sets the border color
-			'fill-opacity': 1
-		}
-	});	
 	
 	// Add raster tileset source and layer
 	map.addSource('raster-tileset-source', {
@@ -167,7 +168,10 @@ map.on('load', function() {
 	map.addLayer({
 		'id': 'raster-tileset-layer',
 		'type': 'raster',
-		'source': 'raster-tileset-source'
+		'source': 'raster-tileset-source',
+		'paint': {
+			'raster-opacity': 0.75 // Set the opacity to 75%
+		}
 	});
 	
 	// Add second vector tileset source and layer
@@ -182,7 +186,7 @@ map.on('load', function() {
 		'source-layer': 'TreeCanopy_0808130444-a5bm9a', // Replace with actual source layer name
 		'paint': {
 			'fill-color': '#008000',
-			'fill-opacity': 1
+			'fill-opacity': 0.75
 		}
 	});
 	
@@ -198,7 +202,7 @@ map.on('load', function() {
 		'source-layer': 'VegNonCanopy_0808130444-0iuc39',
 		'paint': {
 			'fill-color': '#ffff00',
-			'fill-opacity': 1
+			'fill-opacity': 0.75
 		}
 	});
 	
@@ -214,7 +218,7 @@ map.on('load', function() {
 		'source-layer': 'AOIBasinWithColor_0808130444-3blccx', // Replace with actual source layer name
 		'paint': {
 			'fill-color': '#5ccae8',
-			'fill-opacity': 1
+			'fill-opacity': 0.75
 		}
 	});	
 	
@@ -230,7 +234,7 @@ map.on('load', function() {
 		'source-layer': 'PotentialCheckDamLocations_08-8fyyzu', // Replace with actual source layer name
 		'paint': {
 			'fill-color': '#5ccae8',
-			'fill-opacity': 1
+			'fill-opacity': 0.75
 		}
 	});
 
@@ -285,20 +289,20 @@ map.on('load', function() {
 		setLayerVisibility('raster-tileset-layer', opacity);
 	});
 
-	// Ninth vector layer opacity control
-	var vector9Opacity = document.getElementById('vector9-opacity');
-	vector9Opacity.addEventListener('input', function(e) {
-		var opacity = parseInt(e.target.value, 10) / 100;
-		map.setPaintProperty('vector9-tileset-layer', 'fill-opacity', opacity);
-		setLayerVisibility('vector9-tileset-layer', opacity);
-	});
-
 	// Third vector layer opacity control
 	var vector3Opacity = document.getElementById('vector3-opacity');
 	vector3Opacity.addEventListener('input', function(e) {
 		var opacity = parseInt(e.target.value, 10) / 100;
 		map.setPaintProperty('vector3-tileset-layer', 'fill-opacity', opacity);
 		setLayerVisibility('vector3-tileset-layer', opacity);
+	});
+
+	// Ninth vector layer opacity control
+	var vector9Opacity = document.getElementById('vector9-opacity');
+	vector9Opacity.addEventListener('input', function(e) {
+		var opacity = parseInt(e.target.value, 10) / 100;
+		map.setPaintProperty('vector9-tileset-layer', 'fill-opacity', opacity);
+		setLayerVisibility('vector9-tileset-layer', opacity);
 	});
 
 	// Tenth vector layer opacity control
@@ -352,6 +356,25 @@ map.on('load', function() {
 			// Add the popup to the map
 			popup.addTo(map);
 		}
+		
+		// Query the 'vector9-tileset-layer' layer to get features at the click location
+		var featuresVector9 = map.queryRenderedFeatures(e.point, {
+			layers: ['vector9-tileset-layer']
+		});
+
+		// If there are features at the click location, show a popup for vector9
+		if (featuresVector9.length) {
+			var feature = featuresVector9[0];
+
+			// Set the popup location to the click location
+			popup.setLngLat(e.lngLat);
+
+			// Set the popup content to the 'address' property of the feature
+			popup.setHTML('<h3>' + feature.properties.address + '</h3><p>' + feature.properties.apn + '</p>');
+
+			// Add the popup to the map
+			popup.addTo(map);
+		}
 
 		// Query the 'vector3-tileset-layer' layer to get features at the click location
 		var featuresVector3 = map.queryRenderedFeatures(e.point, {
@@ -371,25 +394,6 @@ map.on('load', function() {
 			// Add the popup to the map
 			popup.addTo(map);
 		}
-		
-		// Query the 'vector9-tileset-layer' layer to get features at the click location
-		var featuresVector9 = map.queryRenderedFeatures(e.point, {
-			layers: ['vector9-tileset-layer']
-		});
-
-		// If there are features at the click location, show a popup for vector9
-		if (featuresVector9.length) {
-			var feature = featuresVector9[0];
-
-			// Set the popup location to the click location
-			popup.setLngLat(e.lngLat);
-
-			// Set the popup content to the 'address' property of the feature
-			popup.setHTML('<h3>' + feature.properties.address + '</h3><p>' + feature.properties.apn + '</p>');
-
-			// Add the popup to the map
-			popup.addTo(map);
-		}		
 	});
 });
 </script>
