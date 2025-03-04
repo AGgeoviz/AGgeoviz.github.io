@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Display raster and vector tilesets with opacity controls</title>
+<title>AdaptGeo Interactive Map</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
@@ -81,16 +81,16 @@ body { margin: 0; padding: 0; }
     	<input type="range" id="vector2-opacity" min="0" max="100" value="75">
 	</div>	
 	<div class="menu-item">
-    	Relative Land Surface Temperature: <br>
-    	<input type="range" id="raster-opacity" min="0" max="100" value="75">
-	</div>
-	<div class="menu-item">
     	Building Footprints: <br>
     	<input type="range" id="vector3-opacity" min="0" max="100" value="100">
 	</div>
 	<div class="menu-item">
     	Parcels: <br>
     	<input type="range" id="vector9-opacity" min="0" max="100" value="100">
+	</div>
+	<div class="menu-item">
+    	Relative Land Surface Temperature: <br>
+    	<input type="range" id="raster-opacity" min="0" max="100" value="75">
 	</div>
     <div class="menu-item">
     	Median Household Income: <br>
@@ -127,6 +127,20 @@ map.on('load', function() {
 		}
 	});
 
+	// Add raster tileset source and layer
+	map.addSource('raster-tileset-source', {
+		'type': 'raster',
+		'url': 'mapbox://adaptgeo.32fef3sw'
+	});
+	map.addLayer({
+		'id': 'raster-tileset-layer',
+		'type': 'raster',
+		'source': 'raster-tileset-source',
+		'paint': {
+			'raster-opacity': 0.75 // Set the opacity to 75%
+		}
+	});
+
 	// Add ninth vector tileset source and layer
 	map.addSource('vector9-tileset-source', {
 		type: 'vector',
@@ -157,20 +171,6 @@ map.on('load', function() {
 		'paint': {
 			'fill-color': '#a8a396',
 			'fill-opacity': 1
-		}
-	});
-	
-	// Add raster tileset source and layer
-	map.addSource('raster-tileset-source', {
-		'type': 'raster',
-		'url': 'mapbox://adaptgeo.32fef3sw'
-	});
-	map.addLayer({
-		'id': 'raster-tileset-layer',
-		'type': 'raster',
-		'source': 'raster-tileset-source',
-		'paint': {
-			'raster-opacity': 0.75 // Set the opacity to 75%
 		}
 	});
 	
@@ -233,7 +233,7 @@ map.on('load', function() {
 		'source': 'vector4-tileset-source',
 		'source-layer': 'PotentialCheckDamLocations_08-8fyyzu', // Replace with actual source layer name
 		'paint': {
-			'fill-color': '#5ccae8',
+			'fill-color': '#0000FF',
 			'fill-opacity': 0.75
 		}
 	});
@@ -281,14 +281,6 @@ map.on('load', function() {
 		setLayerVisibility('vector2-tileset-layer', opacity);
 	});
 
-	// Raster layer opacity control
-	var rasterOpacity = document.getElementById('raster-opacity');
-	rasterOpacity.addEventListener('input', function(e) {
-		var opacity = parseInt(e.target.value, 10) / 100;
-		map.setPaintProperty('raster-tileset-layer', 'raster-opacity', opacity);
-		setLayerVisibility('raster-tileset-layer', opacity);
-	});
-
 	// Third vector layer opacity control
 	var vector3Opacity = document.getElementById('vector3-opacity');
 	vector3Opacity.addEventListener('input', function(e) {
@@ -303,6 +295,14 @@ map.on('load', function() {
 		var opacity = parseInt(e.target.value, 10) / 100;
 		map.setPaintProperty('vector9-tileset-layer', 'fill-opacity', opacity);
 		setLayerVisibility('vector9-tileset-layer', opacity);
+	});
+
+	// Raster layer opacity control
+	var rasterOpacity = document.getElementById('raster-opacity');
+	rasterOpacity.addEventListener('input', function(e) {
+		var opacity = parseInt(e.target.value, 10) / 100;
+		map.setPaintProperty('raster-tileset-layer', 'raster-opacity', opacity);
+		setLayerVisibility('raster-tileset-layer', opacity);
 	});
 
 	// Tenth vector layer opacity control
