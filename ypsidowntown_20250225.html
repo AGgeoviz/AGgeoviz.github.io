@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>AdaptGeo Interactive Map</title>
+<title>Display raster and vector tilesets with opacity controls</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
@@ -53,56 +53,6 @@ body { margin: 0; padding: 0; }
 	height: auto;
 	margin-bottom: 10px; /* Space below the image */
 }
-
-/* Green color style for the opacity slider */
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 10px;
-  background: #ddd; /* Light gray background */
-  border-radius: 5px;
-  outline: none;
-  transition: background 0.3s ease;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  background: #ddd; /* Light gray background for the track */
-  height: 10px;
-  border-radius: 5px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background: #457953; /* Green color for the slider thumb */
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-input[type="range"]::-moz-range-track {
-  background: #ddd; /* Light gray background for the track */
-  height: 10px;
-  border-radius: 5px;
-}
-
-input[type="range"]::-moz-range-thumb {
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background: #457953; /* Green color for the slider thumb */
-  cursor: pointer;
-}
-
-input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #ccc; /* Darker gray when focused */
-}
-
-input[type="range"]:focus::-moz-range-track {
-  background: #ccc; /* Darker gray when focused */
-}
-
 </style>
 </head>
 <body>
@@ -131,16 +81,16 @@ input[type="range"]:focus::-moz-range-track {
     	<input type="range" id="vector2-opacity" min="0" max="100" value="75">
 	</div>	
 	<div class="menu-item">
+    	Relative Land Surface Temperature: <br>
+    	<input type="range" id="raster-opacity" min="0" max="100" value="75">
+	</div>
+	<div class="menu-item">
     	Building Footprints: <br>
     	<input type="range" id="vector3-opacity" min="0" max="100" value="100">
 	</div>
 	<div class="menu-item">
     	Parcels: <br>
     	<input type="range" id="vector9-opacity" min="0" max="100" value="100">
-	</div>
-	<div class="menu-item">
-    	Relative Land Surface Temperature: <br>
-    	<input type="range" id="raster-opacity" min="0" max="100" value="75">
 	</div>
     <div class="menu-item">
     	Median Household Income: <br>
@@ -177,20 +127,6 @@ map.on('load', function() {
 		}
 	});
 
-	// Add raster tileset source and layer
-	map.addSource('raster-tileset-source', {
-		'type': 'raster',
-		'url': 'mapbox://adaptgeo.32fef3sw'
-	});
-	map.addLayer({
-		'id': 'raster-tileset-layer',
-		'type': 'raster',
-		'source': 'raster-tileset-source',
-		'paint': {
-			'raster-opacity': 0.75 // Set the opacity to 75%
-		}
-	});
-
 	// Add ninth vector tileset source and layer
 	map.addSource('vector9-tileset-source', {
 		type: 'vector',
@@ -221,6 +157,20 @@ map.on('load', function() {
 		'paint': {
 			'fill-color': '#a8a396',
 			'fill-opacity': 1
+		}
+	});
+	
+	// Add raster tileset source and layer
+	map.addSource('raster-tileset-source', {
+		'type': 'raster',
+		'url': 'mapbox://adaptgeo.32fef3sw'
+	});
+	map.addLayer({
+		'id': 'raster-tileset-layer',
+		'type': 'raster',
+		'source': 'raster-tileset-source',
+		'paint': {
+			'raster-opacity': 0.75 // Set the opacity to 75%
 		}
 	});
 	
@@ -283,7 +233,7 @@ map.on('load', function() {
 		'source': 'vector4-tileset-source',
 		'source-layer': 'PotentialCheckDamLocations_08-8fyyzu', // Replace with actual source layer name
 		'paint': {
-			'fill-color': '#0000FF',
+			'fill-color': '#5ccae8',
 			'fill-opacity': 0.75
 		}
 	});
@@ -331,6 +281,14 @@ map.on('load', function() {
 		setLayerVisibility('vector2-tileset-layer', opacity);
 	});
 
+	// Raster layer opacity control
+	var rasterOpacity = document.getElementById('raster-opacity');
+	rasterOpacity.addEventListener('input', function(e) {
+		var opacity = parseInt(e.target.value, 10) / 100;
+		map.setPaintProperty('raster-tileset-layer', 'raster-opacity', opacity);
+		setLayerVisibility('raster-tileset-layer', opacity);
+	});
+
 	// Third vector layer opacity control
 	var vector3Opacity = document.getElementById('vector3-opacity');
 	vector3Opacity.addEventListener('input', function(e) {
@@ -345,14 +303,6 @@ map.on('load', function() {
 		var opacity = parseInt(e.target.value, 10) / 100;
 		map.setPaintProperty('vector9-tileset-layer', 'fill-opacity', opacity);
 		setLayerVisibility('vector9-tileset-layer', opacity);
-	});
-
-	// Raster layer opacity control
-	var rasterOpacity = document.getElementById('raster-opacity');
-	rasterOpacity.addEventListener('input', function(e) {
-		var opacity = parseInt(e.target.value, 10) / 100;
-		map.setPaintProperty('raster-tileset-layer', 'raster-opacity', opacity);
-		setLayerVisibility('raster-tileset-layer', opacity);
 	});
 
 	// Tenth vector layer opacity control
