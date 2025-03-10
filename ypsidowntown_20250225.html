@@ -53,6 +53,76 @@ body { margin: 0; padding: 0; }
 	height: auto;
 	margin-bottom: 10px; /* Space below the image */
 }
+
+/* General styles for the range input */
+input[type="range"] {
+  -webkit-appearance: none;    /* WebKit browsers (Chrome, Safari, Android) */
+  -moz-appearance: none;       /* Firefox */
+  appearance: none;            /* Other browsers */
+  width: 100%;                 /* Full width */
+  height: 10px;                /* Track height */
+  background: #ddd;         /* Grey background for the track */
+  border-radius: 5px;          /* Rounded corners for track */
+  outline: none;               /* Remove focus outline */
+  transition: background 0.3s ease; /* Smooth background transition */
+}
+
+/* WebKit-based browsers (Chrome, Safari, Android) track styling */
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #ddd;         /* Grey background for the track */
+  height: 10px;                /* Track height */
+  border-radius: 5px;          /* Rounded corners */
+}
+
+/* Firefox track styling */
+input[type="range"]::-moz-range-track {
+  background: #ddd;         /* Grey background for the track */
+  height: 10px;                /* Track height */
+  border-radius: 5px;          /* Rounded corners */
+}
+
+/* WebKit-based browsers (Chrome, Safari, Android) thumb styling */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;    /* Remove default appearance */
+  height: 20px;                /* Thumb height */
+  width: 20px;                 /* Thumb width */
+  border-radius: 50%;          /* Circular thumb */
+  background: #457953;         /* Green color for the thumb */
+  cursor: pointer;            /* Pointer cursor on hover */
+  transition: background 0.3s ease; /* Smooth background transition */
+  margin-top: -5px;            /* Adjust to center the thumb vertically */
+}
+
+/* Firefox thumb styling */
+input[type="range"]::-moz-range-thumb {
+  height: 20px;                /* Thumb height */
+  width: 20px;                 /* Thumb width */
+  border-radius: 50%;          /* Circular thumb */
+  background: #457953;         /* Green color for the thumb */
+  cursor: pointer;            /* Pointer cursor on hover */
+}
+
+/* MS Edge and IE track styling */
+input[type="range"]::-ms-track {
+  background: #ddd;         /* Grey background for the track */
+  height: 10px;                /* Track height */
+  border-radius: 5px;          /* Rounded corners */
+  border-color: transparent;   /* Transparent borders */
+  color: transparent;          /* Transparent color */
+  width: 100%;
+}
+
+/* MS Edge and IE thumb styling */
+input[type="range"]::-ms-thumb {
+  height: 20px;                /* Thumb height */
+  width: 20px;                 /* Thumb width */
+  border-radius: 50%;          /* Circular thumb */
+  background: #457953;         /* Green color for the thumb */
+  cursor: pointer;            /* Pointer cursor on hover */
+  margin-top: -5px;            /* Adjust to center the thumb vertically */
+}
+
+
 </style>
 </head>
 <body>
