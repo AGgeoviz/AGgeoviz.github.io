@@ -1,0 +1,361 @@
+
+<!-- https://support.squarespace.com/hc/en-us/articles/206543167-Code-blocks
+ The above link may contain useful information, though I figured everything out using ChatGPT -->
+
+<!-- There are 2 scripts in this file.  The first is the web map script, and the second is a bit of CSS that removes the headers, footers, and margins from the SquareSpace map. 
+To embed the web map script in a page, go to "Website" and either create a new page or create a space within an existing page.  Adding the page into "Not Linked" will allow 
+for editing prior to the page going live.  Next, select "Edit" > "Add Section" > "Add a Blank Section" > "Add Block" and select "Code."  Edit the code (just copy and paste the
+portion of the script below between the beginning <!DOCTYPE html> and end </html> tags.  Save the code/page, and the page will be live.
+
+<!-- Next, assuming we want the web map to occupy the full page, we can use some CSS in squarespace to remove headers, footers, and margins ONLY for the page in question. To do 
+this, we copy and paste into squarespace the code below prior to <!DOCTYPE html>.  First, we have to edit the code to point to the specific page we want it to apply to.  A page's 
+unique ID can be found by inspecting the loaded page's html (F12 in windows).  Look for <body class=" or <body id="collection-681e14af9cdc771cca12ded6".  After editing the unique
+ID, copy and paste the code (up to but not including <!DOCTYPE html>) into the box at "Website" > "Pages" > "Custom Code" > "Custom CSS".  The "Custom Files" section will show 
+errors if there are any, though there shouldn't be, and the code/CSS will automatically be applied to the page.  Test by navigating to the URL. -->
+
+/* === Remove Header & Footer === */
+.collection-681e14af9cdc771cca12ded6 header,
+.collection-681e14af9cdc771cca12ded6 footer {
+  display: none !important;
+}
+
+/* === Remove Padding/Margin from All Main Containers === */
+.collection-681e14af9cdc771cca12ded6 .sqs-block,
+.collection-681e14af9cdc771cca12ded6 .content-wrapper,
+.collection-681e14af9cdc771cca12ded6 .main-content,
+.collection-681e14af9cdc771cca12ded6 .page-section,
+.collection-681e14af9cdc771cca12ded6 .sqs-layout,
+.collection-681e14af9cdc771cca12ded6 body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* === Make Map Container Fill Full Viewport === */
+#map {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AdaptGeo Interactive Map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+#menu {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 1;
+	background-color: white;
+	padding: 10px;
+	width: 250px;
+	transition: transform 0.3s ease;
+	transform: translateX(0); /* Menu initially visible */
+}
+
+#menu.closed {
+	transform: translateX(250px); /* Hide the menu by sliding it out */
+}
+/* Style for the imadaptgeoe in the menu */
+#menu img {
+	width: 100%;
+	height: auto;
+	margin-bottom: 10px; /* Space below the imadaptgeoe */
+}
+#search-box {
+  background: #f8f8f8;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.menu-item { margin-bottom: 10px; }
+
+/* Button for toggling the menu */
+#menuToggle {
+	position: absolute;
+	top: 10px;
+	left: -50px;
+	background-color: #333;
+	color: white;
+	border: none;
+	padding: 5px;
+	cursor: pointer;
+	border-radius: 4px;
+	width: 60px;  /* Double the original width */
+	height: 50px;  /* Double the original height */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 30px;  /* Increase the font size for the three lines */
+}
+
+/* Style for the image in the menu */
+#menu img {
+	width: 100%;
+	height: auto;
+	margin-bottom: 10px; /* Space below the image */
+}
+
+/* General styles for the range input */
+input[type="range"] {
+  -webkit-appearance: none;    /* WebKit browsers (Chrome, Safari, Android) */
+  -moz-appearance: none;       /* Firefox */
+  appearance: none;            /* Other browsers */
+  width: 100%;                 /* Full width */
+  height: 10px;                /* Track height */
+  background: #ddd;         /* Grey background for the track */
+  border-radius: 5px;          /* Rounded corners for track */
+  outline: none;               /* Remove focus outline */
+  transition: background 0.3s ease; /* Smooth background transition */
+}
+
+/* WebKit-based browsers (Chrome, Safari, Android) track styling */
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #ddd;         /* Grey background for the track */
+  height: 10px;                /* Track height */
+  border-radius: 5px;          /* Rounded corners */
+}
+
+/* Firefox track styling */
+input[type="range"]::-moz-range-track {
+  background: #ddd;         /* Grey background for the track */
+  height: 10px;                /* Track height */
+  border-radius: 5px;          /* Rounded corners */
+}
+
+/* WebKit-based browsers (Chrome, Safari, Android) thumb styling */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;    /* Remove default appearance */
+  height: 20px;                /* Thumb height */
+  width: 20px;                 /* Thumb width */
+  border-radius: 50%;          /* Circular thumb */
+  background: #457953;         /* Green color for the thumb */
+  cursor: pointer;            /* Pointer cursor on hover */
+  transition: background 0.3s ease; /* Smooth background transition */
+  margin-top: -5px;            /* Adjust to center the thumb vertically */
+}
+
+/* Firefox thumb styling */
+input[type="range"]::-moz-range-thumb {
+  height: 20px;                /* Thumb height */
+  width: 20px;                 /* Thumb width */
+  border-radius: 50%;          /* Circular thumb */
+  background: #457953;         /* Green color for the thumb */
+  cursor: pointer;            /* Pointer cursor on hover */
+}
+
+/* MS Edge and IE track styling */
+input[type="range"]::-ms-track {
+  background: #ddd;         /* Grey background for the track */
+  height: 10px;                /* Track height */
+  border-radius: 5px;          /* Rounded corners */
+  border-color: transparent;   /* Transparent borders */
+  color: transparent;          /* Transparent color */
+  width: 100%;
+}
+
+/* MS Edge and IE thumb styling */
+input[type="range"]::-ms-thumb {
+  height: 20px;                /* Thumb height */
+  width: 20px;                 /* Thumb width */
+  border-radius: 50%;          /* Circular thumb */
+  background: #457953;         /* Green color for the thumb */
+  cursor: pointer;            /* Pointer cursor on hover */
+  margin-top: -5px;            /* Adjust to center the thumb vertically */
+}
+
+
+</style>
+</head>
+<body>
+<div id="map"></div>
+<!-- Fullscreen Modal -->
+<div id="imageModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85);">
+  <span onclick="closeModal()" style="position:absolute; top:20px; right:30px; color:#fff; font-size:40px; cursor:pointer;">&times;</span>
+  <img id="modalImage" style="max-width:90%; max-height:90%; margin:auto; display:block; position:absolute; top:0; bottom:0; left:0; right:0;">
+</div>
+<div id="menu">
+	<!-- Add the imadaptgeoe at the top of the menu -->
+	<img src="https://github.com/AGgeoviz/AGgeoviz.github.io/blob/main/AG_horiz_green_2400.png?raw=true" alt="Menu Imadaptgeoe">
+	<button id="menuToggle">≡</button>
+	<div id="search-box">
+	<input type="text" id="address" placeholder="Enter address..." />
+	<button onclick="searchAddress()">Search</button>
+	</div>
+	<!-- "value" below sets the initial position of the web map opacity slider -->
+	<div class="menu-item">
+    	20sw Facilities: <br>
+    	<input type="range" id="20swFacility-opacity" min="0" max="100" value="100">
+	</div>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhcHRnZW8iLCJhIjoiY2xwdmIwMGlyMDNkZzJrcGsybXh1emFpMSJ9.qeCqoOvHTXJIKF4q80v4CA';
+var map = new mapboxgl.Map({
+	container: 'map',
+	maxZoom: 16,
+	minZoom: 10,
+	zoom: 10,
+	center: [-76.610891, 39.300533],
+	style: 'mapbox://styles/mapbox/satellite-streets-v12'
+});
+
+// Add a popup to the map for parcels
+var popup = new mapboxgl.Popup({
+	closeButton: false
+});
+
+map.on('load', function() {
+	
+	// Add 20sw facility vector tileset source and layer
+	map.addSource('20swFacility-tileset-source', {
+		'type': 'vector',
+		'url': 'mapbox://adaptgeo.dpwbajhy'
+	});
+	
+	
+	map.addLayer({
+	  'id': '20swFacility-tileset-layer',
+	  'type': 'circle',
+	  'source': '20swFacility-tileset-source',
+	  'source-layer': 'Baltimore20sw_Nominatim-844da4',
+	  'paint': {
+		'circle-radius': 6,
+		'circle-color': '#0000FF',
+		'circle-opacity': 0.75
+	  }
+	});
+	
+	
+	// Function to disable layer click events and pop-ups when opacity is 0
+	function setLayerVisibility(layerId, opacity) {
+		if (opacity === 0) {
+			map.setLayoutProperty(layerId, 'visibility', 'none');
+			// Remove pop-up if opacity is 0
+			popup.remove();
+		} else {
+			map.setLayoutProperty(layerId, 'visibility', 'visible');
+		}
+	}
+
+	// 20sw facility vector layer opacity control
+	var Facility20swOpacity = document.getElementById('20swFacility-opacity');
+	Facility20swOpacity.addEventListener('input', function(e) {
+		var opacity = parseInt(e.target.value, 10) / 100;
+		map.setPaintProperty('20swFacility-tileset-layer', 'circle-opacity', opacity);
+		setLayerVisibility('20swFacility-tileset-layer', opacity);
+	});
+
+	// Add scale bar in the upper-left corner
+	var scale = new mapboxgl.ScaleControl({
+		maxWidth: 200,
+		unit: 'imperial'  // Use 'metric' for metric units
+	});
+	map.addControl(scale, 'top-left');
+
+	// Add toggle functionality for the menu
+	const menu = document.getElementById('menu');
+	const menuToggle = document.getElementById('menuToggle');
+
+	menuToggle.addEventListener('click', () => {
+		menu.classList.toggle('closed'); // Toggle the 'closed' class to slide the menu
+	});
+   
+	// Add an event listener to produce feature attribute pop-ups when the user clicks on the map
+	map.on('click', function(e) {
+
+		// Query the '20swFacility-tileset-layer' layer to get features at the click location
+		var featuresfacilities = map.queryRenderedFeatures(e.point, {
+			layers: ['20swFacility-tileset-layer']
+		});
+
+		// If there are features at the click location, show a popup for footprints
+		if (featuresfacilities.length) {
+			var feature = featuresfacilities[0];
+
+			popup.remove();  // remove any existing popup
+
+			// Set the popup location to the click location
+			popup.setLngLat(e.lngLat);
+
+			// Set the popup content to the 'Address' property of the feature
+			popup.setHTML('<h3>Address</h3><p>' + feature.properties.Address + '</p>');
+
+			// Add the popup to the map
+			popup.addTo(map);
+		}
+	});
+});
+
+function searchAddress() {
+  const address = document.getElementById('address').value;
+  const center = map.getCenter();  // Get map center dynamically
+  const proximity = `${center.lng},${center.lat}`;
+  let cleanAddress = address.trim().toLowerCase();
+  cleanAddress = cleanAddress.replace(/\./g, ''); // Remove periods
+  cleanAddress = cleanAddress.replace(/\s+/g, ' '); // Collapse double spaces
+
+  fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(cleanAddress)}.json?access_token=${mapboxgl.accessToken}&proximity=${proximity}&types=address`)
+	.then(res => res.json())
+	.then(data => {
+	  if (!data.features.length) {
+		alert('No results found.');
+		return;
+	  }
+	  const coords = data.features[0].center;
+	  map.flyTo({ center: coords, zoom: 17 });
+
+	  // Small delay to ensure features are rendered at new zoom
+	  setTimeout(() => {
+		const point = map.project(coords);
+		const features = map.queryRenderedFeatures(point, {
+		  layers: ['20swFacility-tileset-layer']
+		});
+
+		if (features.length > 0) {
+		  const facility = features[0];
+
+		  // Remove existing popup before showing new one
+		  popup.remove();
+
+		  popup.setLngLat(coords)
+			   .setHTML(`<h3>${facility.properties.Address}</h3><p>${facility.properties.Address}</p>`)
+			   .addTo(map);
+		} else {
+		  alert('No 20sw facility found at that location');
+		}
+	  }, 1000);
+	});
+}
+
+function enlargeImage(src) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    modalImg.src = src;
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
+
+document.getElementById('address').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    searchAddress();
+  }
+});
+
+</script>
+</body>
+</html>
