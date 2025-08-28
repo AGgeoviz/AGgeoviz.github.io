@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.42 47">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #84bde7;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 1.25px;
+      }
+
+      .cls-2 {
+        stroke: #3189c9;
+      }
+
+      .cls-7, .cls-8, .cls-9 {
+        fill: #1c3664;
+      }
+
+      .cls-3 {
+        stroke: #1c3664;
+      }
+
+      .cls-4 {
+        stroke: #0b67b2;
+      }
+
+      .cls-8, .cls-9 {
+        font-family: Figtree-Regular, Figtree;
+        font-size: 7px;
+      }
+
+      .cls-8, .cls-10 {
+        letter-spacing: .08em;
+      }
+
+      .cls-5 {
+        stroke: #54a4db;
+      }
+
+      .cls-6 {
+        stroke: #b5d8f2;
+      }
+
+      .cls-11 {
+        letter-spacing: .07em;
+      }
+
+      .cls-12 {
+        letter-spacing: .06em;
+      }
+    </style>
+  </defs>
+  <path class="cls-6" d="M.62,6.19C7.53.23,12.33.04,15.52,1.16c3.67,1.28,5.12,4.22,9.08,5.03,4.56.93,8.68-1.74,11.55-4.29"/>
+  <path class="cls-1" d="M.62,16.19c6.91-5.96,11.7-6.14,14.9-5.03,3.67,1.28,5.12,4.22,9.08,5.03,4.56.93,8.68-1.74,11.55-4.29"/>
+  <path class="cls-5" d="M.62,26.19c6.91-5.96,11.7-6.14,14.9-5.03,3.67,1.28,5.12,4.22,9.08,5.03,4.56.93,8.68-1.74,11.55-4.29"/>
+  <path class="cls-2" d="M.62,36.19c6.91-5.96,11.7-6.14,14.9-5.03,3.67,1.28,5.12,4.22,9.08,5.03,4.56.93,8.68-1.74,11.55-4.29"/>
+  <path class="cls-4" d="M.62,46.19c6.91-5.96,11.7-6.14,14.9-5.03,3.67,1.28,5.12,4.22,9.08,5.03,4.56.93,8.68-1.74,11.55-4.29"/>
+  <g>
+    <line class="cls-3" x1="47.66" y1="1.72" x2="47.66" y2="43.94"/>
+    <polygon class="cls-7" points="42.54 39.8 43.46 38.94 47.65 43.46 51.85 38.94 52.77 39.8 47.65 45.29 42.54 39.8"/>
+  </g>
+  <text class="cls-8" transform="translate(46.24 30.63) rotate(-90)"><tspan x="0" y="0">More</tspan></text>
+  <text class="cls-9" transform="translate(53.88 30.63) rotate(-90)"><tspan class="cls-10" x="0" y="0">Fl</tspan><tspan class="cls-12" x="6.39" y="0">o</tspan><tspan class="cls-11" x="10.88" y="0">w</tspan></text>
+</svg>
